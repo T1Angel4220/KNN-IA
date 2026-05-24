@@ -1,12 +1,3 @@
-"""
-Módulo: visualizacion/graficar_resultados.py
-Responsabilidad:
-    - Graficar con matplotlib la exactitud y error global del KNN.
-    - Graficar la precisión por clase (barra horizontal).
-    - Guardar los gráficos como PNG en la carpeta resultados/.
-    - Visualizar la matriz de confusión como mapa de calor.
-"""
-
 # pyrefly: ignore [missing-import]
 import os
 # pyrefly: ignore [missing-import]
@@ -14,36 +5,21 @@ import numpy as np
 # pyrefly: ignore [import-shadowed, missing-import]
 import matplotlib
 # pyrefly: ignore [import-shadowed]
-matplotlib.use('Agg')               # backend sin pantalla
+matplotlib.use('Agg')
 # pyrefly: ignore [missing-import]
 import matplotlib.pyplot as plt
 
-
 CARPETA_RESULTADOS = os.path.join(os.path.dirname(__file__), '..', 'resultados')
 
-
-# ──────────────────────────────────────────────────────────────
 def _asegurar_carpeta() -> str:
-    """Crea la carpeta resultados/ si no existe y retorna su ruta."""
     ruta = os.path.abspath(CARPETA_RESULTADOS)
     os.makedirs(ruta, exist_ok=True)
     return ruta
 
-
-# ──────────────────────────────────────────────────────────────
 def graficar_exactitud_error(exactitud: float,
                              error: float,
                              k: int,
                              metrica: str) -> None:
-    """
-    Genera un gráfico de barras con exactitud y error globales.
-
-    Parámetros
-    ----------
-    exactitud, error : float - métricas globales [0, 1]
-    k                : int   - K usado en el clasificador
-    metrica          : str   - métrica de distancia usada
-    """
     carpeta = _asegurar_carpeta()
     fig, ax = plt.subplots(figsize=(6, 4))
 
@@ -71,19 +47,9 @@ def graficar_exactitud_error(exactitud: float,
     plt.close()
     print(f"\n  [PNG] Gráfico guardado en: {ruta}")
 
-
-# ──────────────────────────────────────────────────────────────
 def graficar_precision_por_clase(y_verdaderas: np.ndarray,
                                  y_predichas: np.ndarray,
                                  n_clases: int = 10) -> None:
-    """
-    Gráfico de barras horizontal con la precisión (%) por clase.
-
-    Parámetros
-    ----------
-    y_verdaderas, y_predichas : arrays de etiquetas
-    n_clases                  : int
-    """
     carpeta = _asegurar_carpeta()
 
     precisiones = []
@@ -118,18 +84,8 @@ def graficar_precision_por_clase(y_verdaderas: np.ndarray,
     plt.close()
     print(f"  [PNG] Gráfico guardado en: {ruta}")
 
-
-# ──────────────────────────────────────────────────────────────
 def graficar_matriz_confusion(matriz: np.ndarray,
                               n_clases: int = 10) -> None:
-    """
-    Visualiza la matriz de confusión como mapa de calor.
-
-    Parámetros
-    ----------
-    matriz   : ndarray (n_clases, n_clases)
-    n_clases : int
-    """
     carpeta = _asegurar_carpeta()
 
     fig, ax = plt.subplots(figsize=(8, 7))

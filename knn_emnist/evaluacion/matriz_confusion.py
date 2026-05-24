@@ -1,50 +1,15 @@
-"""
-Módulo: evaluacion/matriz_confusion.py
-Responsabilidad:
-    - Construir la matriz de confusión manualmente con NumPy.
-    - Imprimir la matriz de forma legible en consola.
-    - Mostrar precisión por clase y top-5 errores más frecuentes.
-"""
-
 # pyrefly: ignore [missing-import]
 import numpy as np
 
-
-# ──────────────────────────────────────────────────────────────
 def construir_matriz(y_verdaderas: np.ndarray,
                      y_predichas: np.ndarray,
                      n_clases: int = 10) -> np.ndarray:
-    """
-    Construye la matriz de confusión usando únicamente NumPy.
-
-    Parámetros
-    ----------
-    y_verdaderas : ndarray (n,) - etiquetas reales
-    y_predichas  : ndarray (n,) - etiquetas predichas
-    n_clases     : int          - número de clases (10 dígitos)
-
-    Retorna
-    -------
-    matriz : ndarray (n_clases, n_clases)
-        matriz[i, j] = número de veces que la clase real 'i'
-                       fue predicha como clase 'j'
-    """
     matriz = np.zeros((n_clases, n_clases), dtype=int)
     for real, pred in zip(y_verdaderas, y_predichas):
         matriz[real][pred] += 1
     return matriz
 
-
-# ──────────────────────────────────────────────────────────────
 def imprimir_matriz(matriz: np.ndarray, n_clases: int = 10) -> None:
-    """
-    Imprime la matriz de confusión con formato tabular en consola.
-
-    Parámetros
-    ----------
-    matriz   : ndarray (n_clases, n_clases)
-    n_clases : int
-    """
     print("\n" + "=" * 65)
     print("   MATRIZ DE CONFUSION (calculada con NumPy)")
     print("=" * 65)
@@ -75,7 +40,6 @@ def imprimir_matriz(matriz: np.ndarray, n_clases: int = 10) -> None:
     print(f"  Total correctos   : {np.trace(matriz)}")
     print(f"  Total errores     : {np.sum(matriz) - np.trace(matriz)}")
 
-    # Top-5 confusiones más frecuentes
     print("\n  Top 5 confusiones más frecuentes:")
     errores = []
     for i in range(n_clases):

@@ -1,51 +1,18 @@
-"""
-Módulo: evaluacion/metricas.py
-Responsabilidad:
-    - Calcular exactitud y error del clasificador KNN.
-    - Mostrar comparación entre predicciones y valores reales.
-    - Evaluar si el modelo alcanza el umbral de calidad (error <= 0.10).
-"""
-
 # pyrefly: ignore [missing-import]
 import numpy as np
 
-
-# ──────────────────────────────────────────────────────────────
 def calcular_metricas(y_verdaderas: np.ndarray,
                       y_predichas: np.ndarray) -> tuple:
-    """
-    Calcula exactitud global y error de clasificación.
-
-    Parámetros
-    ----------
-    y_verdaderas : ndarray (n,) - etiquetas reales
-    y_predichas  : ndarray (n,) - etiquetas predichas por el KNN
-
-    Retorna
-    -------
-    exactitud : float  - fracción de predicciones correctas [0, 1]
-    error     : float  - fracción de predicciones incorrectas [0, 1]
-    """
     correctas = np.sum(y_predichas == y_verdaderas)
     total     = len(y_verdaderas)
     exactitud = correctas / total
     error     = 1.0 - exactitud
     return exactitud, error
 
-
-# ──────────────────────────────────────────────────────────────
 def imprimir_resultados(y_verdaderas: np.ndarray,
                         y_predichas: np.ndarray,
                         exactitud: float,
                         error: float) -> None:
-    """
-    Muestra los resultados finales de evaluación en consola.
-
-    Parámetros
-    ----------
-    y_verdaderas, y_predichas : arrays de etiquetas
-    exactitud, error          : métricas calculadas
-    """
     total     = len(y_verdaderas)
     correctas = int(exactitud * total)
 
