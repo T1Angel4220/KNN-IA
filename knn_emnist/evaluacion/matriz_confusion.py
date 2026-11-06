@@ -1,15 +1,45 @@
-# pyrefly: ignore [missing-import]
+"""
+Módulo de Construcción e Interpretación de Matriz de Confusión.
+
+Responsabilidad:
+  - Construir matriz de confusión bidimensional pura con NumPy.
+  - Imprimir en consola la tabla cruzada de aciertos y errores por clase.
+  - Identificar los pares de clases más frecuentemente confundidos.
+"""
+
 import numpy as np
+
 
 def construir_matriz(y_verdaderas: np.ndarray,
                      y_predichas: np.ndarray,
                      n_clases: int = 10) -> np.ndarray:
+    """
+    Construye la matriz de confusión cuadrática (n_clases x n_clases).
+    Filas corresponden a la clase real y columnas a la clase predicha.
+
+    Parámetros:
+        y_verdaderas (np.ndarray): Etiquetas reales.
+        y_predichas (np.ndarray): Etiquetas predichas.
+        n_clases (int): Número de categorías.
+
+    Retorna:
+        np.ndarray: Matriz de enteros de forma (n_clases, n_clases).
+    """
     matriz = np.zeros((n_clases, n_clases), dtype=int)
     for real, pred in zip(y_verdaderas, y_predichas):
         matriz[real][pred] += 1
     return matriz
 
+
 def imprimir_matriz(matriz: np.ndarray, n_clases: int = 10) -> None:
+    """
+    Despliega la matriz de confusión formateada en consola con porcentajes
+    de precisión individuales y top de confusiones.
+
+    Parámetros:
+        matriz (np.ndarray): Matriz de confusión calculada.
+        n_clases (int): Número total de clases.
+    """
     print("\n" + "=" * 65)
     print("   MATRIZ DE CONFUSION (calculada con NumPy)")
     print("=" * 65)

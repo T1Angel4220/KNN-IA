@@ -1,25 +1,42 @@
-# pyrefly: ignore [missing-import]
+"""
+Módulo de Visualización Gráfica de Resultados (Matplotlib).
+
+Genera y guarda en disco figuras en formato PNG para análisis cuantitativo:
+  1. Gráfico de barras comparativo de Exactitud vs Tasa de Error.
+  2. Gráfico de barras horizontal de Precisión por cada Dígito (0-9).
+  3. Mapa de calor (Heatmap) de la Matriz de Confusión.
+"""
+
 import os
-# pyrefly: ignore [missing-import]
+from typing import Optional
 import numpy as np
-# pyrefly: ignore [import-shadowed, missing-import]
 import matplotlib
-# pyrefly: ignore [import-shadowed]
 matplotlib.use('Agg')
-# pyrefly: ignore [missing-import]
 import matplotlib.pyplot as plt
 
 CARPETA_RESULTADOS = os.path.join(os.path.dirname(__file__), '..', 'resultados')
 
+
 def _asegurar_carpeta() -> str:
+    """Garantiza la existencia del directorio de destino para los gráficos."""
     ruta = os.path.abspath(CARPETA_RESULTADOS)
     os.makedirs(ruta, exist_ok=True)
     return ruta
+
 
 def graficar_exactitud_error(exactitud: float,
                              error: float,
                              k: int,
                              metrica: str) -> None:
+    """
+    Genera y almacena el gráfico de barras comparativo de Exactitud y Error.
+
+    Parámetros:
+        exactitud (float): Exactitud global calculada.
+        error (float): Tasa de error global calculada.
+        k (int): Número de vecinos utilizado en el modelo.
+        metrica (str): Métrica de distancia utilizada.
+    """
     carpeta = _asegurar_carpeta()
     fig, ax = plt.subplots(figsize=(6, 4))
 
@@ -47,9 +64,18 @@ def graficar_exactitud_error(exactitud: float,
     plt.close()
     print(f"\n  [PNG] Gráfico guardado en: {ruta}")
 
+
 def graficar_precision_por_clase(y_verdaderas: np.ndarray,
                                  y_predichas: np.ndarray,
                                  n_clases: int = 10) -> None:
+    """
+    Calcula y grafica la precisión porcentual individual para cada dígito.
+
+    Parámetros:
+        y_verdaderas (np.ndarray): Etiquetas verdaderas.
+        y_predichas (np.ndarray): Etiquetas predichas.
+        n_clases (int): Cantidad de clases.
+    """
     carpeta = _asegurar_carpeta()
 
     precisiones = []
@@ -84,8 +110,16 @@ def graficar_precision_por_clase(y_verdaderas: np.ndarray,
     plt.close()
     print(f"  [PNG] Gráfico guardado en: {ruta}")
 
+
 def graficar_matriz_confusion(matriz: np.ndarray,
                               n_clases: int = 10) -> None:
+    """
+    Genera un mapa de calor para la matriz de confusión con anotaciones numéricas.
+
+    Parámetros:
+        matriz (np.ndarray): Matriz de confusión bidimensional.
+        n_clases (int): Cantidad de clases.
+    """
     carpeta = _asegurar_carpeta()
 
     fig, ax = plt.subplots(figsize=(8, 7))
