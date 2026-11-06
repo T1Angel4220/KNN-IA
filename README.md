@@ -240,19 +240,3 @@ Los gráficos generados automáticamente se almacenan en `knn_emnist/resultados/
   |           ####             |
   +----------------------------+
 ```
-
----
-
-## 🛡️ Buenas Prácticas y Seguridad
-
-* **Higiene de Repositorio:** El archivo `.gitignore` previene la inclusión accidental de archivos binarios `.pyc`, carpetas `__pycache__`, archivos comprimidos `.zip`, datasets `.csv` pesados y archivos de variables de entorno `.env`.
-* **Privacidad de Entorno:** Ninguna ruta absoluta personal o credencial queda expuesta en el historial de Git.
-* **Modularidad:** Código estructurado en paquetes independientes con responsabilidades bien delimitadas (`clasificador`, `datos`, `evaluacion`, `visualizacion`).
-* **Tipado Estático:** Uso de type hints de Python (`typing`) y documentación estandarizada bajo PEP 257.
-
----
-
-## 👤 Autor
-
-* **Desarrollado para:** Portafolio Académico y Profesional en Inteligencia Artificial.
-* **Institución:** Universidad Técnica de Ambato (UTA).
